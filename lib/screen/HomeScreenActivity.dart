@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:demo/main.dart';
 import 'package:demo/screen/LoginScreenActivity.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -228,29 +229,34 @@ class _HomeScreenActivityState extends State<HomeScreenActivity> {
                           width: 100,
                           height: 100,
                         ),
-                        Column(
-                          children: [
-                            Container(
-                                padding: EdgeInsets.all(4),
-                                child: Text(
-                                    "Name : ${jsonResult[index]["username"]}")),
-                            Container(
-                                padding: EdgeInsets.all(4),
-                                child: Text(
-                                    "Email : ${jsonResult[index]["email"]}")),
-                            Container(
-                                padding: EdgeInsets.all(4),
-                                child: Text(
-                                    "Primary Contact : ${contactfinder(jsonResult[index]["contact_numbers"])}")),
-                            Container(
-                                padding: EdgeInsets.all(4),
-                                child: Text(
-                                    "City : ${jsonResult[index]["city"]}")),
-                            Container(
-                                padding: EdgeInsets.all(4),
-                                child: Text(
-                                    "Products he may like : ${productfinder(jsonResult[index]["favourite_products"], jsonResult[index]["visited_products"])}")),
-                          ],
+                        Expanded(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                  padding: EdgeInsets.all(4),
+                                  child: Text(
+                                      "Name : ${jsonResult[index]["username"]}")),
+                              Container(
+                                  padding: EdgeInsets.all(4),
+                                  child: Text(
+                                      "Email : ${jsonResult[index]["email"]}")),
+                              Container(
+                                  padding: EdgeInsets.all(4),
+                                  child: Text(
+                                      "Primary Contact : ${contactfinder(jsonResult[index]["contact_numbers"])}")),
+                              Container(
+                                  padding: EdgeInsets.all(4),
+                                  child: Text(
+                                      "City : ${jsonResult[index]["city"]}")),
+                              Container(
+                                  padding: EdgeInsets.all(4),
+                                  child: Text(
+                                      "Products he may like : ${productfinder(jsonResult[index]["favourite_products"], jsonResult[index]["visited_products"])}")),
+                            ],
+                          ),
                         )
                       ],
                     ),
