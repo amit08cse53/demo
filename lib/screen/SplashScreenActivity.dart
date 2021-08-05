@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:demo/main.dart';
 import 'package:demo/screen/HomeScreenActivity.dart';
 import 'package:demo/screen/LoginScreenActivity.dart';
+import 'package:demo/screen/TestScreenActivity.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -92,6 +93,8 @@ class _SplashScreenActivityState extends State<SplashScreenActivity> {
 
   Future navigationPage() async {
     // Navigator.pushReplacementNamed(context, WelcomeScreen.routeName);
+
+    // Navigator.pushReplacementNamed(context, TestScreenActivity.routeName);
 
     if (_prefs.getBool("isLogin") ?? false) {
       Navigator.pushReplacementNamed(context, HomeScreenActivity.routeName);

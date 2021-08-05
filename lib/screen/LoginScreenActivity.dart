@@ -1,5 +1,6 @@
 import 'package:demo/main.dart';
 import 'package:demo/screen/HomeScreenActivity.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -49,24 +50,51 @@ class _LoginScreenActivityState extends State<LoginScreenActivity> {
                       child: SizedBox(
                           height: 200,
                           child: Image(
-                              image:
-                                  AssetImage('assets/ic_flutter_logo.png')))),
+                              image: AssetImage('assets/images/login.png')))),
+                  InkWell(onLongPress: (){
+    // UserName :
+    // Password :
+
+    // getDataApi({
+    // "UserName": "${}",
+    // "Password": "${}"
+                    nameController.text = "9426264288";
+                    passwordController.text = "123456";
+
+
+                  },
+                    child: Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.all(10),
+                      child: Text(
+                        "Login",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 32,
+                            color: Colors.redAccent),
+                      ),
+                    ),
+                  ),
                   Container(
                     padding: EdgeInsets.all(10),
                     child: TextFormField(
                       onSaved: (String value) {},
                       validator: (String value) {
-                        if (value.isEmpty) {
-                          return "User Name is Required";
-                        } else {
+                        if (value.length != 10)
+                          return 'Mobile Number must be of 10 digit';
+                        else
                           return null;
-                        }
                       },
                       controller: nameController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'User Name',
-                      ),
+                      decoration: new InputDecoration(
+                          border:
+                              UnderlineInputBorder(borderSide: BorderSide()),
+                          errorBorder:
+                              UnderlineInputBorder(borderSide: BorderSide()),
+                          contentPadding: EdgeInsets.only(
+                              left: 15, bottom: 11, top: 11, right: 15),
+                          hintText: "Mobile No",
+                          counterText: "10"),
                     ),
                   ),
                   Container(
@@ -79,7 +107,7 @@ class _LoginScreenActivityState extends State<LoginScreenActivity> {
                         RegExp regExp = new RegExp(patttern);
                         if (value.isEmpty) {
                           return "Password is Required";
-                        } else if (value.length < 8) {
+                        } else if (value.length < 4) {
                           return "Password must minimum eight characters";
                         }
                         /*else if (!regExp.hasMatch(value)) {
@@ -120,20 +148,45 @@ class _LoginScreenActivityState extends State<LoginScreenActivity> {
       /// No any error in validation
       _key.currentState.save();
 
-      _prefs.setBool("isLogin", true);
+      // _prefs.setBool("isLogin", true);
 
-      Navigator.pushNamedAndRemoveUntil(context, HomeScreenActivity.routeName,
-          (Route<dynamic> route) => false);
+      // Navigator.pushNamedAndRemoveUntil(context, HomeScreenActivity.routeName,
+      //     (Route<dynamic> route) => false);
 
       // print("Email ${_loginData.email}");
       // print("Password ${_loginData.password}");
+      // UserName : 	9426264288
+      // Password :	123456
 
-      // _parse_Login("${_loginData.email}", "${_loginData.password}");
+       Map<String, dynamic> map= {
+        "UserName": "${nameController.text}",
+        "Password": "${passwordController.text}"
+      };
+
+
+      getDataApi(map, "api/token");
     } else {
       ///validation error
       setState(() {
         _validate = true;
       });
     }
+  }
+
+  Future<dynamic> getDataApi(Map map, String endPoint) async {
+    Dio dio = Dio();
+    dio.interceptors.add(LogInterceptor(
+        responseBody: true,
+        responseHeader: true,
+        requestBody: true,
+        requestHeader: true,
+        error: true,
+        request: true));
+
+    var formData = FormData.fromMap(map);
+    var response =
+        await dio.post('http://115.124.96.40:8099/$endPoint', data: formData);
+
+    print("");
   }
 }

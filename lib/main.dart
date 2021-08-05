@@ -1,6 +1,7 @@
 import 'package:demo/screen/HomeScreenActivity.dart';
 import 'package:demo/screen/LoginScreenActivity.dart';
 import 'package:demo/screen/SplashScreenActivity.dart';
+import 'package:demo/screen/TestScreenActivity.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -55,6 +56,9 @@ class MyApp extends StatelessWidget {
         break;
       case HomeScreenActivity.routeName:
         screen = HomeScreenActivity();
+        break;
+      case TestScreenActivity.routeName:
+        screen = TestScreenActivity();
         break;
 
     // case EditScreenViewActivity.routeName:
